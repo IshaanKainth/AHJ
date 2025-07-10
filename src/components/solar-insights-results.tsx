@@ -66,7 +66,7 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
           <Separator />
           <div className="flex items-center justify-between">
             <p className="font-medium">Supports SolarAPP+?</p>
-            <Badge variant={solarapp_plus_supported ? "default" : "secondary"}>
+            <Badge variant={solarapp_plus_supported ? "default" : "destructive"} className={solarapp_plus_supported ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}>
               {solarapp_plus_supported ? <CheckCircle2 className="mr-2 h-4 w-4" /> : <XCircle className="mr-2 h-4 w-4" />}
               {solarapp_plus_supported ? "Yes" : "No"}
             </Badge>
@@ -101,13 +101,13 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
             <InfoRow icon={Clock} label="Turnaround Time" iconClassName="text-primary">
               {turnaround_time}
             </InfoRow>
-            <InfoRow icon={CheckCircle2} label="Solar Permit Required" iconClassName="text-primary">
+            <InfoRow icon={solar_permit_required ? CheckCircle2 : XCircle} label="Solar Permit Required" iconClassName="text-red-500">
               {solar_permit_required ? "Yes" : "No"}
             </InfoRow>
-            <InfoRow icon={BatteryCharging} label="Battery Permit Required" iconClassName="text-primary">
+            <InfoRow icon={solar_battery_permit_required ? CheckCircle2 : XCircle} label="Battery Permit Required" iconClassName="text-green-500">
               {solar_battery_permit_required ? "Yes" : "No"}
             </InfoRow>
-            <InfoRow icon={ShieldCheck} label="Inspection Required" iconClassName="text-primary">
+            <InfoRow icon={inspection_required ? CheckCircle2 : XCircle} label="Inspection Required" iconClassName="text-primary">
               {inspection_required ? "Yes" : "No"}
             </InfoRow>
           </div>
