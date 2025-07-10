@@ -88,10 +88,17 @@ export default {
             height: '0',
           },
         },
+        'sun-brighten': {
+          '0%': { boxShadow: '0 0 0 0 hsl(var(--primary) / 0)' },
+          '25%': { boxShadow: '0 0 0 0 hsl(var(--primary) / 0)' }, /* stay dim for a bit */
+          '50%': { boxShadow: '0 0 20px 5px hsl(var(--primary) / 0.5)' },
+          '100%': { boxShadow: '0 0 0 0 hsl(var(--primary) / 0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'sun-brighten': 'sun-brighten 4s ease-in-out',
       },
     },
   },

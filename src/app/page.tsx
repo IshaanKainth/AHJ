@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className="container mx-auto max-w-2xl px-4 py-8 md:py-16">
       <div className="flex flex-col items-center text-center">
-        <div className="flex items-center justify-center w-16 h-16 bg-primary/20 rounded-full mb-4">
+        <div className="flex items-center justify-center w-16 h-16 bg-primary/20 rounded-full mb-4 animate-sun-brighten">
             <Sun className="w-8 h-8 text-primary" />
         </div>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground font-headline">
