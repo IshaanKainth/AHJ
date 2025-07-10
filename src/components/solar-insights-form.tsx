@@ -59,7 +59,7 @@ export function SolarInsightsForm({ onSearch, loading }: SolarInsightsFormProps)
             <Button
               type="submit"
               disabled={loading}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full w-12 h-12"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full w-14 h-14"
               size="icon"
             >
               {loading ? (
