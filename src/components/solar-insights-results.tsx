@@ -9,11 +9,11 @@ type SolarInsightsResultsProps = {
   data: GetPermitInfoOutput;
 };
 
-const InfoRow = ({ icon, label, children }: { icon: React.ElementType, label: string, children: React.ReactNode }) => {
+const InfoRow = ({ icon, label, children, iconClassName }: { icon: React.ElementType, label: string, children: React.ReactNode, iconClassName?: string }) => {
   const Icon = icon;
   return (
     <div className="flex items-start gap-4">
-      <Icon className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
+      <Icon className={`h-5 w-5 mt-1 flex-shrink-0 ${iconClassName || 'text-muted-foreground'}`} />
       <div className="flex-1">
         <p className="font-medium text-foreground">{label}</p>
         <div className="text-muted-foreground">{children}</div>
@@ -90,24 +90,24 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
             </Button>
           <Separator />
           <div className="space-y-4">
-            <InfoRow icon={FileText} label="Required Documents">
+            <InfoRow icon={FileText} label="Required Documents" iconClassName="text-primary">
               <ul className="list-disc list-inside space-y-1">
                 {documents_required.map((doc, index) => <li key={index}>{doc}</li>)}
               </ul>
             </InfoRow>
-            <InfoRow icon={DollarSign} label="Permit Fee">
+            <InfoRow icon={DollarSign} label="Permit Fee" iconClassName="text-primary">
               {permit_fee}
             </InfoRow>
-            <InfoRow icon={Clock} label="Turnaround Time">
+            <InfoRow icon={Clock} label="Turnaround Time" iconClassName="text-primary">
               {turnaround_time}
             </InfoRow>
-            <InfoRow icon={CheckCircle2} label="Solar Permit Required">
+            <InfoRow icon={CheckCircle2} label="Solar Permit Required" iconClassName="text-primary">
               {solar_permit_required ? "Yes" : "No"}
             </InfoRow>
-            <InfoRow icon={BatteryCharging} label="Battery Permit Required">
+            <InfoRow icon={BatteryCharging} label="Battery Permit Required" iconClassName="text-primary">
               {solar_battery_permit_required ? "Yes" : "No"}
             </InfoRow>
-            <InfoRow icon={ShieldCheck} label="Inspection Required">
+            <InfoRow icon={ShieldCheck} label="Inspection Required" iconClassName="text-primary">
               {inspection_required ? "Yes" : "No"}
             </InfoRow>
           </div>
