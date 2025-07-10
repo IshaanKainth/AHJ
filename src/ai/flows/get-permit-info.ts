@@ -1,4 +1,4 @@
-// 'use server';
+'use server';
 
 /**
  * @fileOverview Retrieves and summarizes solar permitting information for a given ZIP code.
@@ -7,8 +7,6 @@
  * - GetPermitInfoInput - The input type for the getPermitInfo function (ZIP code).
  * - GetPermitInfoOutput - The return type for the getPermitInfo function (permit information).
  */
-
-'use server';
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
@@ -19,24 +17,24 @@ const GetPermitInfoInputSchema = z.object({
 export type GetPermitInfoInput = z.infer<typeof GetPermitInfoInputSchema>;
 
 const GetPermitInfoOutputSchema = z.object({
-  ahjAgency: z.string().describe('The AHJ (Authority Having Jurisdiction) agency name.'),
-  contactInformation: z
-    .object({
-      address: z.string().describe('The address of the AHJ agency.'),
-      phone: z.string().describe('The phone number of the AHJ agency.'),
-      email: z.string().describe('The email address of the AHJ agency.'),
-    })
-    .describe('AHJ contact information.'),
-  solarAppPlusSupport: z.boolean().describe('Indicates SolarAPP+ support (yes/no).'),
-  permitInformation: z
-    .object({
-      permitPortalURL: z.string().describe('URL to the permit portal.'),
-      requiredDocuments: z.array(z.string()).describe('List of required documents.'),
-      permitFee: z.string().describe('Permit fee.'),
-      turnaroundTime: z.string().describe('Permit turnaround time.'),
-      batteryPermitRequired: z.boolean().describe('Whether a battery permit is required.'),
-    })
-    .describe('Detailed permit information.'),
+  jurisdiction_type: z.enum(['city', 'county']).describe('The type of jurisdiction.'),
+  city: z.string().describe('The city name.'),
+  county: z.string().describe('The county name.'),
+  solar_permitting_authority: z.object({
+    agency_name: z.string().describe('The agency that issues solar permits.'),
+    address: z.string().describe('The full address of the permit office.'),
+    phone: z.string().describe('The public phone number for permitting help.'),
+    email: z.string().describe('The public-facing email for solar permits.'),
+    website: z.string().describe('URL to solar permit rules or info.'),
+    permit_portal_url: z.string().describe('URL to the permit application portal.'),
+    solarapp_plus_supported: z.boolean().describe('Indicates if SolarAPP+ is supported.'),
+    solar_permit_required: z.boolean().describe('Indicates if a solar permit is required.'),
+    solar_battery_permit_required: z.boolean().describe('Indicates if a solar battery permit is required.'),
+    inspection_required: z.boolean().describe('Indicates if an inspection is required.'),
+    turnaround_time: z.string().describe("Typical approval timeline (e.g., '1–3 business days')."),
+    permit_fee: z.string().describe('Fee range or flat fee for standard PV system.'),
+    documents_required: z.array(z.string()).describe('List of common required documents.'),
+  }),
 });
 export type GetPermitInfoOutput = z.infer<typeof GetPermitInfoOutputSchema>;
 
@@ -48,10 +46,46 @@ const getPermitInfoPrompt = ai.definePrompt({
   name: 'getPermitInfoPrompt',
   input: {schema: GetPermitInfoInputSchema},
   output: {schema: GetPermitInfoOutputSchema},
-  prompt: `You are an expert on solar permitting requirements in the United States.
-  Given a ZIP code, you will retrieve and summarize the solar permitting information for that area.
+  prompt: `You are a solar permitting assistant.
 
-  ZIP Code: {{{zipCode}}}
+Your job is to take a valid U.S. ZIP code as input and return all the structured solar permitting details related to that location. Focus only on official building/planning departments that issue **solar permits**, and exclude unrelated AHJs.
+
+Use the following JSON format for output:
+{
+  "zip_code": "<5-digit ZIP code>",
+  "jurisdiction_type": "city" or "county",
+  "city": "<City Name>",
+  "county": "<County Name>",
+  "solar_permitting_authority": {
+    "agency_name": "<Agency that issues solar permits>",
+    "address": "<Full address of the permit office>",
+    "phone": "<Public phone number for permitting help>",
+    "email": "<Public-facing email for solar permits>",
+    "website": "<URL to solar permit rules or info>",
+    "permit_portal_url": "<URL to the permit application portal>",
+    "solarapp_plus_supported": true or false,
+    "solar_permit_required": true or false,
+    "solar_battery_permit_required": true or false,
+    "inspection_required": true or false,
+    "turnaround_time": "<Typical approval timeline (e.g., '1–3 business days')>",
+    "permit_fee": "<Fee range or flat fee for standard PV system>",
+    "documents_required": [
+      "<Common required document #1>",
+      "<Common required document #2>",
+      "<Common required document #3>"
+    ]
+  }
+}
+
+Always ensure:
+- All information is accurate, sourced from official city/county portals.
+- The data is focused on solar permits, especially for residential rooftop PV.
+- If the location uses SolarAPP+, mark 'solarapp_plus_supported: true'.
+- If info is unavailable, mark the field as \`null\` or \`"Not publicly listed"\` instead of guessing.
+
+Input ZIP code: {{{zipCode}}}
+
+Return only the valid JSON output without any extra text.
 `,
 });
 

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Building, MapPin, Phone, Mail, CheckCircle2, XCircle, ExternalLink, FileText, DollarSign, Clock, BatteryCharging } from 'lucide-react';
+import { Building, MapPin, Phone, Mail, CheckCircle2, XCircle, ExternalLink, FileText, DollarSign, Clock, BatteryCharging, ShieldCheck } from 'lucide-react';
 
 type SolarInsightsResultsProps = {
   data: GetPermitInfoOutput;
@@ -22,9 +22,23 @@ const InfoRow = ({ icon, label, children }: { icon: React.ElementType, label: st
   );
 };
 
-
 export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
-  const { ahjAgency, contactInformation, solarAppPlusSupport, permitInformation } = data;
+  const { jurisdiction_type, city, county, solar_permitting_authority } = data;
+  const { 
+    agency_name, 
+    address, 
+    phone, 
+    email, 
+    website,
+    permit_portal_url,
+    solarapp_plus_supported, 
+    solar_permit_required,
+    solar_battery_permit_required,
+    inspection_required,
+    turnaround_time,
+    permit_fee,
+    documents_required
+  } = solar_permitting_authority;
 
   return (
     <div className="space-y-6 animate-in fade-in-50 duration-500">
@@ -34,27 +48,28 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
             <Building className="h-6 w-6 text-primary" />
             Authority Having Jurisdiction (AHJ)
           </CardTitle>
+          <p className="text-sm text-muted-foreground pt-1">{city}, {county} ({jurisdiction_type})</p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-xl font-semibold">{ahjAgency}</p>
+          <p className="text-xl font-semibold">{agency_name}</p>
           <Separator />
           <div className="space-y-4">
             <InfoRow icon={MapPin} label="Address">
-              {contactInformation.address}
+              {address}
             </InfoRow>
             <InfoRow icon={Phone} label="Phone">
-              <a href={`tel:${contactInformation.phone}`} className="hover:underline">{contactInformation.phone}</a>
+              <a href={`tel:${phone}`} className="hover:underline">{phone}</a>
             </InfoRow>
             <InfoRow icon={Mail} label="Email">
-              <a href={`mailto:${contactInformation.email}`} className="hover:underline">{contactInformation.email}</a>
+              <a href={`mailto:${email}`} className="hover:underline">{email}</a>
             </InfoRow>
           </div>
           <Separator />
           <div className="flex items-center justify-between">
             <p className="font-medium">Supports SolarAPP+?</p>
-            <Badge variant={solarAppPlusSupport ? "default" : "secondary"}>
-              {solarAppPlusSupport ? <CheckCircle2 className="mr-2 h-4 w-4" /> : <XCircle className="mr-2 h-4 w-4" />}
-              {solarAppPlusSupport ? "Yes" : "No"}
+            <Badge variant={solarapp_plus_supported ? "default" : "secondary"}>
+              {solarapp_plus_supported ? <CheckCircle2 className="mr-2 h-4 w-4" /> : <XCircle className="mr-2 h-4 w-4" />}
+              {solarapp_plus_supported ? "Yes" : "No"}
             </Badge>
           </div>
         </CardContent>
@@ -68,27 +83,41 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-            <Button asChild variant="outline" className="w-full">
-              <a href={permitInformation.permitPortalURL} target="_blank" rel="noopener noreferrer">
-                Visit Permit Portal
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <Button asChild variant="outline" className="w-full">
+                  <a href={website} target="_blank" rel="noopener noreferrer">
+                    Visit Website
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="default" className="w-full">
+                  <a href={permit_portal_url} target="_blank" rel="noopener noreferrer">
+                    Permit Portal
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+            </div>
           <Separator />
           <div className="space-y-4">
             <InfoRow icon={FileText} label="Required Documents">
               <ul className="list-disc list-inside space-y-1">
-                {permitInformation.requiredDocuments.map((doc, index) => <li key={index}>{doc}</li>)}
+                {documents_required.map((doc, index) => <li key={index}>{doc}</li>)}
               </ul>
             </InfoRow>
             <InfoRow icon={DollarSign} label="Permit Fee">
-              {permitInformation.permitFee}
+              {permit_fee}
             </InfoRow>
             <InfoRow icon={Clock} label="Turnaround Time">
-              {permitInformation.turnaroundTime}
+              {turnaround_time}
+            </InfoRow>
+            <InfoRow icon={CheckCircle2} label="Solar Permit Required">
+              {solar_permit_required ? "Yes" : "No"}
             </InfoRow>
             <InfoRow icon={BatteryCharging} label="Battery Permit Required">
-              {permitInformation.batteryPermitRequired ? "Yes" : "No"}
+              {solar_battery_permit_required ? "Yes" : "No"}
+            </InfoRow>
+            <InfoRow icon={ShieldCheck} label="Inspection Required">
+              {inspection_required ? "Yes" : "No"}
             </InfoRow>
           </div>
         </CardContent>
