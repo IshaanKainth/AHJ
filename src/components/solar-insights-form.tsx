@@ -40,16 +40,13 @@ export function SolarInsightsForm({ onSearch, loading }: SolarInsightsFormProps)
             control={form.control}
             name="zipCode"
             render={({ field }) => (
-              <FormItem className="relative flex-1 py-2 pl-6">
-                <label className="text-xs font-bold block" htmlFor={field.name}>
-                  ZIP Code
-                </label>
+              <FormItem className="relative flex-1 py-3 pl-6">
                 <FormControl>
                   <Input
                     id={field.name}
                     placeholder="Enter your zip code"
                     {...field}
-                    className="border-0 h-auto p-0 text-sm text-muted-foreground bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="border-0 h-auto p-0 text-md text-muted-foreground bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
                 </FormControl>
                 <div className="absolute top-full pt-1">
