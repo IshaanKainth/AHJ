@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SolarInsightsForm } from "@/components/solar-insights-form";
 import { SolarInsightsResults } from "@/components/solar-insights-results";
 import { SolarInsightsSkeleton } from "@/components/solar-insights-skeleton";
-import { Sun } from 'lucide-react';
+import { SunLogo } from "@/components/sun-logo";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ export default function Home() {
     <main className="container mx-auto max-w-2xl px-4 py-8 md:py-16">
       <div className="flex flex-col items-center text-center">
         <div className="flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4 animate-sun-brighten">
-            <Sun className="w-8 h-8 text-accent" />
+            <SunLogo className="w-8 h-8 text-accent" />
         </div>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground font-headline">
           ZipSun
