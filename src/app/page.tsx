@@ -47,10 +47,10 @@ export default function Home() {
             <Sun className="w-8 h-8 text-primary" />
         </div>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground font-headline">
-          Solar Insights
+          ZipSun
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Enter your ZIP code to get instant solar permitting information.
+          Know the Rules. Power the Roof.
         </p>
       </div>
 

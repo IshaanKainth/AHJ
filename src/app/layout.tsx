@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Solar Insights',
-  description: 'Get solar permitting information for your ZIP code.',
+  title: 'ZipSun',
+  description: 'Know the Rules. Power the Roof.',
 };
 
 export default function RootLayout({
