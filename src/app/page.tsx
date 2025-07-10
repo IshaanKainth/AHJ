@@ -54,7 +54,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-12">
         <SolarInsightsForm onSearch={handleSearch} loading={loading} />
       </div>
 

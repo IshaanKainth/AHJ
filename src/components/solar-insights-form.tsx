@@ -6,7 +6,8 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   zipCode: z.string().regex(/^\d{5}$/, {
@@ -33,29 +34,45 @@ export function SolarInsightsForm({ onSearch, loading }: SolarInsightsFormProps)
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 items-start">
-        <FormField
-          control={form.control}
-          name="zipCode"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormControl>
-                <Input placeholder="Enter ZIP Code" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={loading} className="bg-accent text-accent-foreground hover:bg-accent/90">
-          {loading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Searching...
-            </>
-          ) : (
-            "Search"
-          )}
-        </Button>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <div className="group flex items-center justify-between w-full rounded-full border bg-card shadow-sm transition-shadow hover:shadow-md focus-within:shadow-md focus-within:ring-2 focus-within:ring-primary/50">
+          <FormField
+            control={form.control}
+            name="zipCode"
+            render={({ field }) => (
+              <FormItem className="relative flex-1 py-2 pl-6">
+                <label className="text-xs font-bold block" htmlFor={field.name}>
+                  ZIP Code
+                </label>
+                <FormControl>
+                  <Input
+                    id={field.name}
+                    placeholder="Enter where to search"
+                    {...field}
+                    className="border-0 h-auto p-0 text-sm text-muted-foreground bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </FormControl>
+                <div className="absolute top-full pt-1">
+                   <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <div className="p-2">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full w-12 h-12"
+              size="icon"
+            >
+              {loading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <Search className="h-5 w-5" />
+              )}
+            </Button>
+          </div>
+        </div>
       </form>
     </Form>
   );
