@@ -49,7 +49,8 @@ const getPermitInfoPrompt = ai.definePrompt({
   prompt: `You are a solar permitting assistant.
 
 Your job is to take a valid U.S. ZIP code as input and return all the structured solar permitting details related to that location. Focus only on official building/planning departments that issue **solar permits**, and exclude unrelated AHJs.
-
+Make sure to return links that are publicly known or confirmed official domains like '.gov', '.org', or official '.us' portals. 
+- If the real solar permit webpage or permit portal is **not publicly listed**, DO NOT generate a fake link.
 Use the following JSON format for output:
 {
   "zip_code": "<5-digit ZIP code>",
@@ -82,7 +83,7 @@ Always ensure:
 - The data is focused on solar permits, especially for residential rooftop PV.
 - If the location uses SolarAPP+, mark 'solarapp_plus_supported: true'.
 - If info is unavailable, mark the field as \`null\` or \`"Not publicly listed"\` instead of guessing.
-
+- DO NOT guess or invent permit or city website URLs.
 Input ZIP code: {{{zipCode}}}
 
 Return only the valid JSON output without any extra text.
