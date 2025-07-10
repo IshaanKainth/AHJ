@@ -30,7 +30,6 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
     phone, 
     email, 
     website,
-    permit_portal_url,
     solarapp_plus_supported, 
     solar_permit_required,
     solar_battery_permit_required,
@@ -83,20 +82,12 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <Button asChild variant="outline" className="w-full">
-                  <a href={website} target="_blank" rel="noopener noreferrer">
-                    Visit Website
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-                <Button asChild variant="default" className="w-full">
-                  <a href={permit_portal_url} target="_blank" rel="noopener noreferrer">
-                    Permit Portal
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-            </div>
+            <Button asChild variant="outline" className="w-full">
+              <a href={website} target="_blank" rel="noopener noreferrer">
+                Visit Website
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           <Separator />
           <div className="space-y-4">
             <InfoRow icon={FileText} label="Required Documents">
