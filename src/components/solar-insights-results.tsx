@@ -57,10 +57,10 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
               {address}
             </InfoRow>
             <InfoRow icon={Phone} label="Phone">
-              <a href={`tel:${phone}`} className="hover:underline">{phone}</a>
+              <a href={`tel:${phone}`} className="text-primary hover:underline">{phone}</a>
             </InfoRow>
             <InfoRow icon={Mail} label="Email">
-              <a href={`mailto:${email}`} className="hover:underline">{email}</a>
+              <a href={`mailto:${email}`} className="text-primary hover:underline">{email}</a>
             </InfoRow>
           </div>
           <Separator />
@@ -101,10 +101,10 @@ export function SolarInsightsResults({ data }: SolarInsightsResultsProps) {
             <InfoRow icon={Clock} label="Turnaround Time" iconClassName="text-primary">
               {turnaround_time}
             </InfoRow>
-            <InfoRow icon={solar_permit_required ? CheckCircle2 : XCircle} label="Solar Permit Required" iconClassName="text-red-500">
+            <InfoRow icon={solar_permit_required ? CheckCircle2 : XCircle} label="Solar Permit Required" iconClassName={solar_permit_required ? "text-green-500" : "text-red-500"}>
               {solar_permit_required ? "Yes" : "No"}
             </InfoRow>
-            <InfoRow icon={solar_battery_permit_required ? CheckCircle2 : XCircle} label="Battery Permit Required" iconClassName="text-green-500">
+            <InfoRow icon={solar_battery_permit_required ? CheckCircle2 : XCircle} label="Battery Permit Required" iconClassName={solar_battery_permit_required ? "text-green-500" : "text-red-500"}>
               {solar_battery_permit_required ? "Yes" : "No"}
             </InfoRow>
             <InfoRow icon={inspection_required ? CheckCircle2 : XCircle} label="Inspection Required" iconClassName="text-primary">
