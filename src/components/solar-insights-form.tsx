@@ -47,7 +47,7 @@ export function SolarInsightsForm({ onSearch, loading }: SolarInsightsFormProps)
                 <FormControl>
                   <Input
                     id={field.name}
-                    placeholder="Enter where to search"
+                    placeholder="Enter your zip code"
                     {...field}
                     className="border-0 h-auto p-0 text-sm text-muted-foreground bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
